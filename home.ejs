@@ -1,0 +1,42 @@
+<%- include('../layout', { title: 'Home' }) %>
+<h1 class="text-center mb-4">Lista de Pokemones</h1>
+
+<form action="/pokemones/search" method="get" class="search-form">
+    <input type="text" name="name" placeholder="Buscar por nombre" class="form-control d-inline">
+    <select name="region" class="form-control d-inline">
+        <option value="">Todas las regiones</option>
+        <% regiones.forEach(region => { %>
+            <option value="<%= region.id %>"><%= region.nombre %></option>
+        <% }) %>
+    </select>
+    <button type="submit" class="btn">Buscar</button>
+</form>
+
+<div class="pokemon-grid">
+    <% pokemones.forEach(pokemon => { %>
+        <div class="pokemon-card">
+            <div class="card-image">
+                <img src="<%= pokemon.url_imagen %>" alt="<%= pokemon.nombre %>">
+            </div>
+            <div class="text-center p-4">
+                <div class="pokemon-type">
+                    <% if (pokemon.Tipo) { %>
+                        <%= pokemon.Tipo.nombre %>
+                    <% } else { %>
+                        Tipo desconocido
+                    <% } %>
+                </div>
+                <h2 class="pokemon-name"><%= pokemon.nombre %></h2>
+                <p class="pokemon-info">
+                    Región: 
+                    <% if (pokemon.Region) { %>
+                        <%= pokemon.Region.nombre %>
+                    <% } else { %>
+                        Región desconocida
+                    <% } %>
+                </p>
+                <a href="/pokemones/<%= pokemon.id %>" class="btn details-button">Detalles</a>
+            </div>
+        </div>
+    <% }) %>
+</div>
